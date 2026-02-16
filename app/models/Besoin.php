@@ -39,23 +39,23 @@ class Besoin {
      */
     public function create($titre, $description, $quantite, $prix_unitaire, $categorie_id = null, $user_id = null, $ville = null) {
         // Insert into besoins according to provided SQL schema (nom, type_besoin, prix, quantite)
+        // Insert into besoins with correct column order: nom, type_besoin, prix, quantite
         $this->db->runQuery(
-            "INSERT INTO besoins (nom, type_besoin, quantite, prix) VALUES (?, ?, ?, ?)",
-            [$titre, $description, $quantite, $prix_unitaire]
+            "INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES (?, ?, ?, ?)",
+            [$titre, $description, $prix_unitaire, $quantite]
         );
 
+        // get last insert id immediately
+        $besoin_id = $this->db->lastInsertId();
+
         // Try to link with ville via sinistres if a ville name was provided
-        if ($ville) {
-            // find ville id by name
-            $v = $this->db->fetchAll("SELECT id FROM ville WHERE nom = ? LIMIT 1", [$ville]);
+        if ($ville && $besoin_id) {
+            // find ville id by name (trim to avoid spacing issues)
+            $v = $this->db->fetchAll("SELECT id FROM ville WHERE TRIM(nom) = ? LIMIT 1", [trim($ville)]);
             $vArr = $this->toArray($v);
             if (count($vArr) > 0 && isset($vArr[0]['id'])) {
                 $ville_id = $vArr[0]['id'];
-                // get last insert id
-                $besoin_id = $this->db->lastInsertId();
-                if ($besoin_id) {
-                    $this->db->runQuery("INSERT INTO sinistres (ville_id, besoin_id) VALUES (?, ?)", [$ville_id, $besoin_id]);
-                }
+                $this->db->runQuery("INSERT INTO sinistres (ville_id, besoin_id) VALUES (?, ?)", [$ville_id, $besoin_id]);
             }
         }
 
