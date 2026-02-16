@@ -22,27 +22,6 @@
     <header>
         <div class="header-area">
             <div class="main-header">
-                <div class="header-top black-bg d-none d-md-block">
-                    <div class="container">
-                        <div class="col-xl-12">
-                            <div class="row d-flex justify-content-between align-items-center">
-                                <div class="header-info-left">
-                                    <ul>
-                                        <li><img src="/template/img/icon/header_icon1.png" alt="">34ºc, Sunny </li>
-                                        <li><img src="/template/img/icon/header_icon1.png" alt="">Tuesday, 18:00</li>
-                                    </ul>
-                                </div>
-                                <div class="header-info-right">
-                                    <ul class="header-social">
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                        <li> <a href="#"><i class="fab fa-pinterest-p"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="header-mid d-none d-md-block">
                     <div class="container">
                         <div class="row d-flex align-items-center">
@@ -130,33 +109,6 @@
     <!-- Footer -->
     <footer>
         <div class="footer-wrapper section-bg2" data-background="/template/img/gallery/footer_bg.png">
-            <div class="footer-area footer-padding">
-                <div class="container">
-                    <div class="row justify-content-between">
-                        <div class="col-xl-4 col-lg-4 col-md-5 col-sm-8">
-                            <div class="single-footer-caption mb-50">
-                                <div class="single-footer-caption mb-30">
-                                    <div class="footer-tittle">
-                                        <div class="footer-pera">
-                                            <p>Aider les communautés touchées par les cyclones.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-3 col-sm-5">
-                            <div class="single-footer-caption mb-50">
-                                <div class="footer-tittle">
-                                    <h4>Liens rapides</h4>
-                                    <ul>
-                                        <li><a href="/">Accueil</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="footer-bottom-area">
                 <div class="container">
                     <div class="footer-border">
