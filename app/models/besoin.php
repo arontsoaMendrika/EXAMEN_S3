@@ -26,13 +26,21 @@ class Besoin {
     /**
      * Créer un nouveau besoin
      */
-        public function create($titre, $description, $categorie_id, $user_id, $ville) {
-            $this->db->runQuery(
-                "INSERT INTO besoins (titre, description, categorie_id, user_id, ville) VALUES (?, ?, ?, ?, ?)",
-                [$titre, $description, $categorie_id, $user_id, $ville]
-            );
-            return true;
-        }
+    public function create($titre, $description, $quantite, $prix_unitaire, $categorie_id = null, $user_id = null, $ville = null) {
+        $this->db->runQuery(
+            "INSERT INTO besoins (titre, description, quantite, prix_unitaire, categorie_id, user_id, ville) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            [$titre, $description, $quantite, $prix_unitaire, $categorie_id, $user_id, $ville]
+        );
+        return true;
+    }
+
+    /**
+     * Récupérer tous les besoins
+     */
+    public function getAll() {
+        $rows = $this->db->fetchAll("SELECT b.*, c.nom as categorie_nom FROM besoins b LEFT JOIN categorie c ON b.categorie_id = c.id ORDER BY b.id DESC");
+        return $this->toArray($rows);
+    }
     
     /**
      * Récupérer tous les besoins d'un utilisateur
@@ -61,5 +69,13 @@ class Besoin {
                 ORDER BY b.id DESC
             ", [$ville]);
             return $this->toArray($rows);
+        }
+
+        /**
+         * Supprimer un besoin
+         */
+        public function delete($id) {
+            $this->db->runQuery("DELETE FROM besoins WHERE id = ?", [$id]);
+            return true;
         }
 }
