@@ -44,6 +44,33 @@ $router->group('', function(Router $router) use ($app) {
 		}
 	});
 
+	$router->get('/besoins/edit', function() use ($app) {
+		$id = $_GET['id'] ?? null;
+		if ($id) {
+			$controller = new \app\controllers\BesoinController($app->db(), $app);
+			$controller->edit($id);
+		} else {
+			header('Location: ' . $app->get('flight.base_url') . 'besoins');
+			exit;
+		}
+	});
+
+	$router->post('/besoins/update', function() use ($app) {
+		$controller = new \app\controllers\BesoinController($app->db(), $app);
+		$controller->update($_POST);
+	});
+
+	// Villes CRUD
+	$router->get('/villes', function() use ($app) {
+		$controller = new \app\controllers\VilleController($app->db(), $app);
+		$controller->index();
+	});
+
+	$router->post('/villes/create', function() use ($app) {
+		$controller = new \app\controllers\VilleController($app->db(), $app);
+		$controller->create($_POST);
+	});
+
 	$router->group('/api', function() use ($router) {
 		$router->get('/users', [ ApiExampleController::class, 'getUsers' ]);
 		$router->get('/users/@id:[0-9]+', [ ApiExampleController::class, 'getUser' ]);

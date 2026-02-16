@@ -3,70 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($title) ? $title : 'Tableau de bord - Villes et Sinistres'; ?></title>
+    <title><?php echo isset($title) ? $title : 'BNGRC - Suivi des Dons'; ?></title>
 
     <?php $asset_url = (isset($base_url) ? $base_url : '/ETU004364/TRINOME_EXAMEN2/') . 'public/'; ?>
+    
+    <!-- Google Fonts - Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 (local) -->
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/fontawesome-all.min.css">
+    
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/magnific-popup.css">
-    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/themify-icons.css">
-    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/nice-select.css">
-    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/flaticon.css">
-    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/gijgo.css">
-    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/animate.css">
-    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/slicknav.css">
-    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/style.css">
+    
+    <!-- Custom Design -->
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/custom.css">
+    
+    <!-- jQuery -->
     <script src="<?php echo $asset_url; ?>template/js/vendor/jquery-1.12.4.min.js"></script>
+
+    <?php
+        // Déterminer la page active pour la sidebar
+        $current_uri = $_SERVER['REQUEST_URI'] ?? '';
+        $is_home = (rtrim($current_uri, '/') === rtrim($base_url, '/')) || $current_uri === $base_url;
+        $is_besoins = strpos($current_uri, 'besoins') !== false;
+        $is_dons = strpos($current_uri, 'dons') !== false;
+        $is_villes = strpos($current_uri, 'villes') !== false;
+    ?>
 </head>
 <body>
-  
-    <header>
-        <div class="header-area">
-            <div class="main-header">
-                <div class="header-mid d-none d-md-block">
-                    <div class="container">
-                        <div class="row d-flex align-items-center">
-                            <div class="col-xl-3 col-lg-3 col-md-3">
-                                <div class="logo">
-                                    <a href="<?php echo $base_url; ?>"><img src="<?php echo $asset_url; ?>template/img/logo/logo.png" alt=""></a>
-                                </div>
-                            </div>
-                            <div class="col-xl-9 col-lg-9 col-md-9">
-                                <div class="header-banner f-right">
-                                    <img src="<?php echo $asset_url; ?>template/img/gallery/header_card.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="header-bottom header-sticky">
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <div class="col-xl-10 col-lg-10 col-md-12 header-flex">
-                                <div class="sticky-logo">
-                                    <a href="<?php echo $base_url; ?>"><img src="<?php echo $asset_url; ?>template/img/logo/logo.png" alt=""></a>
-                                </div>
-                                <div class="main-menu d-none d-md-block">
-                                    <nav>
-                                        <ul id="navigation">
-                                            <li><a href="<?php echo $base_url; ?>">Accueil</a></li>
-                                            <li><a href="<?php echo $base_url; ?>besoins">Voir les besoins</a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                            <div class="col-xl-2 col-lg-2 col-md-2">
-                                <div class="header-right-btn f-right d-none d-lg-block">
-                                    <a href="<?php echo $base_url; ?>dons" class="btn header-btn">Faire un don</a>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="mobile_menu d-block d-md-none"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+<!-- Sidebar Overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">
+            <i class="fa-solid fa-hands-holding-circle"></i>
+        </div>
+        <div>
+            <div class="brand-text">BNGRC</div>
+            <div class="brand-sub">Suivi des Dons</div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Navigation</div>
+            <a href="<?php echo $base_url; ?>" class="sidebar-link <?php echo $is_home ? 'active' : ''; ?>">
+                <i class="fa-solid fa-house"></i>
+                <span>Accueil</span>
+            </a>
+            <a href="<?php echo $base_url; ?>besoins" class="sidebar-link <?php echo $is_besoins ? 'active' : ''; ?>">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <span>Besoins</span>
+            </a>
+            <a href="<?php echo $base_url; ?>dons" class="sidebar-link <?php echo $is_dons ? 'active' : ''; ?>">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+                <span>Dons</span>
+            </a>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Administration</div>
+            <a href="<?php echo $base_url; ?>villes" class="sidebar-link <?php echo $is_villes ? 'active' : ''; ?>">
+                <i class="fa-solid fa-city"></i>
+                <span>Villes</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-footer-text">
+            <i class="fa-solid fa-code"></i> ETU004081 · ETU004342 · ETU004364
+        </div>
+    </div>
+</aside>
+
+<!-- App Content Wrapper -->
+<div class="app-content">
+
+    <!-- Top Header -->
+    <header class="top-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+            <button class="btn-sidebar-toggle" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <h1 class="page-title"><?php echo isset($title) ? $title : 'Tableau de bord'; ?></h1>
+        </div>
+        <div class="header-actions">
+            <a href="<?php echo $base_url; ?>dons" class="btn-primary-custom">
+                <i class="fa-solid fa-plus"></i> Nouveau Don
+            </a>
         </div>
     </header>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
+        }
+    </script>

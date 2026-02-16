@@ -44,4 +44,25 @@ class BesoinController {
         header('Location: ' . $this->app->get('flight.base_url') . 'besoins');
         exit;
     }
+
+    public function edit($id) {
+        $besoinModel = new Besoin($this->db);
+        $villeModel = new Ville($this->db);
+        $besoin = $besoinModel->getById($id);
+        $villes = $villeModel->getAll();
+        $besoins = $besoinModel->getAll();
+        $base_url = $this->app->get('flight.base_url');
+        $edit_mode = true;
+        require __DIR__ . '/../views/besoins.php';
+    }
+
+    public function update($data) {
+        $besoinModel = new Besoin($this->db);
+        $id = $data['id'] ?? null;
+        if ($id) {
+            $besoinModel->update($id, $data['titre'] ?? '', $data['description'] ?? '', $data['quantite'] ?? null, $data['prix_unitaire'] ?? null, $data['ville'] ?? null);
+        }
+        header('Location: ' . $this->app->get('flight.base_url') . 'besoins');
+        exit;
+    }
 }

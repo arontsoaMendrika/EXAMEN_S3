@@ -112,4 +112,40 @@ class Besoin {
                 $this->db->runQuery("DELETE FROM besoins WHERE id = ?", [$id]);
             return true;
         }
+
+        /**
+         * Récupérer un besoin par ID
+         */
+        public function getById($id) {
+            $rows = $this->db->fetchAll("SELECT b.*, v.nom AS ville FROM besoins b LEFT JOIN sinistres s ON b.id = s.besoin_id LEFT JOIN ville v ON s.ville_id = v.id WHERE b.id = ? LIMIT 1", [$id]);
+            $arr = $this->toArray($rows);
+            if (count($arr) > 0) {
+                return $this->normalizeRow($arr[0]);
+            }
+            return null;
+        }
+
+        /**
+         * Mettre à jour un besoin
+         */
+        public function update($id, $titre, $description, $quantite, $prix_unitaire, $ville = null) {
+            $this->db->runQuery(
+                "UPDATE besoins SET nom = ?, type_besoin = ?, prix = ?, quantite = ? WHERE id = ?",
+                [$titre, $description, $prix_unitaire, $quantite, $id]
+            );
+
+            // Update ville link
+            if ($ville) {
+                // Remove old link
+                $this->db->runQuery("DELETE FROM sinistres WHERE besoin_id = ?", [$id]);
+                // Find ville id
+                $v = $this->db->fetchAll("SELECT id FROM ville WHERE TRIM(nom) = ? LIMIT 1", [trim($ville)]);
+                $vArr = $this->toArray($v);
+                if (count($vArr) > 0 && isset($vArr[0]['id'])) {
+                    $ville_id = $vArr[0]['id'];
+                    $this->db->runQuery("INSERT INTO sinistres (ville_id, besoin_id) VALUES (?, ?)", [$ville_id, $id]);
+                }
+            }
+            return true;
+        }
 }
