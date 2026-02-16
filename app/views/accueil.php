@@ -55,7 +55,7 @@
                             </div>
                             <div class="col-xl-2 col-lg-2 col-md-2">
                                 <div class="header-right-btn f-right d-none d-lg-block">
-                                    <a href="dons.php" class="btn header-btn">Faire un don</a>
+                                    <a href="/dons" class="btn header-btn">Faire un don</a>
                                 </div>
                             </div>
                             <div class="col-12">
