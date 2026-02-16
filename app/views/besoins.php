@@ -3,7 +3,7 @@
 <main>
     <div class="container mt-5 p-4 rounded shadow bg-white">
         <h1 class="mb-4 text-primary">Besoins par ville</h1>
-        <form method="post" action="/besoins/create" class="mb-4">
+        <form method="post" action="<?php echo $base_url; ?>besoins/create" class="mb-4">
             <div class="row g-2">
                 <div class="col-md-3">
                     <input type="text" name="titre" class="form-control border-primary" placeholder="Titre" required>
@@ -52,8 +52,8 @@
                             <td><?= htmlspecialchars($besoin['prix_unitaire'] ?? '') ?></td>
                             <td><?= htmlspecialchars($besoin['categorie_nom'] ?? '') ?></td>
                             <td>
-                                <a href="/besoins/edit?id=<?= $besoin['id'] ?>" class="btn btn-sm btn-warning me-1">Modifier</a>
-                                <a href="/besoins/delete?id=<?= $besoin['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce besoin ?');">Supprimer</a>
+                                <a href="<?php echo $base_url; ?>besoins/edit?id=<?= $besoin['id'] ?>" class="btn btn-sm btn-warning me-1">Modifier</a>
+                                <a href="<?php echo $base_url; ?>besoins/delete?id=<?= $besoin['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce besoin ?');">Supprimer</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

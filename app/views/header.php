@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($title) ? $title : 'Tableau de bord - Villes et Sinistres'; ?></title>
 
-    <link rel="stylesheet" href="/template/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/template/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/template/css/magnific-popup.css">
-    <link rel="stylesheet" href="/template/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/template/css/themify-icons.css">
-    <link rel="stylesheet" href="/template/css/nice-select.css">
-    <link rel="stylesheet" href="/template/css/flaticon.css">
-    <link rel="stylesheet" href="/template/css/gijgo.css">
-    <link rel="stylesheet" href="/template/css/animate.css">
-    <link rel="stylesheet" href="/template/css/slicknav.css">
-    <link rel="stylesheet" href="/template/css/style.css">
-    <script src="/template/js/vendor/jquery-1.12.4.min.js"></script>
+    <?php $asset_url = (isset($base_url) ? $base_url : '/ETU004364/TRINOME_EXAMEN2/') . 'public/'; ?>
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/magnific-popup.css">
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/themify-icons.css">
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/nice-select.css">
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/flaticon.css">
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/gijgo.css">
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/animate.css">
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/slicknav.css">
+    <link rel="stylesheet" href="<?php echo $asset_url; ?>template/css/style.css">
+    <script src="<?php echo $asset_url; ?>template/js/vendor/jquery-1.12.4.min.js"></script>
 </head>
 <body>
   
@@ -28,12 +29,12 @@
                         <div class="row d-flex align-items-center">
                             <div class="col-xl-3 col-lg-3 col-md-3">
                                 <div class="logo">
-                                    <a href="/"><img src="/template/img/logo/logo.png" alt=""></a>
+                                    <a href="<?php echo $base_url; ?>"><img src="<?php echo $asset_url; ?>template/img/logo/logo.png" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-9 col-lg-9 col-md-9">
                                 <div class="header-banner f-right">
-                                    <img src="/template/img/gallery/header_card.png" alt="">
+                                    <img src="<?php echo $asset_url; ?>template/img/gallery/header_card.png" alt="">
                                 </div>
                             </div>
                         </div>
@@ -44,20 +45,20 @@
                         <div class="row align-items-center">
                             <div class="col-xl-10 col-lg-10 col-md-12 header-flex">
                                 <div class="sticky-logo">
-                                    <a href="/"><img src="/template/img/logo/logo.png" alt=""></a>
+                                    <a href="<?php echo $base_url; ?>"><img src="<?php echo $asset_url; ?>template/img/logo/logo.png" alt=""></a>
                                 </div>
                                 <div class="main-menu d-none d-md-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="/">Accueil</a></li>
-                                            <li><a href="/besoins">Voir les besoins</a></li>
+                                            <li><a href="<?php echo $base_url; ?>">Accueil</a></li>
+                                            <li><a href="<?php echo $base_url; ?>besoins">Voir les besoins</a></li>
                                         </ul>
                                     </nav>
                                 </div>
                             </div>
                             <div class="col-xl-2 col-lg-2 col-md-2">
                                 <div class="header-right-btn f-right d-none d-lg-block">
-                                    <a href="/dons" class="btn header-btn">Faire un don</a>
+                                    <a href="<?php echo $base_url; ?>dons" class="btn header-btn">Faire un don</a>
                                 </div>
                             </div>
                             <div class="col-12">

@@ -18,27 +18,28 @@ $router->group('', function(Router $router) use ($app) {
 	$router->get('/', [ DashboardController::class, 'index' ]);
 
 	$router->get('/dons', function() use ($app) {
-		$app->render('dons', []);
+		$controller = new \app\controllers\DonController($app->db(), $app);
+		$controller->index();
 	});
 
 	// Besoins CRUD - pages simples
 	$router->get('/besoins', function() use ($app) {
-		$controller = new \app\controllers\BesoinController($app->db());
+		$controller = new \app\controllers\BesoinController($app->db(), $app);
 		$controller->index();
 	});
 
 	$router->post('/besoins/create', function() use ($app) {
-		$controller = new \app\controllers\BesoinController($app->db());
+		$controller = new \app\controllers\BesoinController($app->db(), $app);
 		$controller->create($_POST);
 	});
 
 	$router->get('/besoins/delete', function() use ($app) {
 		$id = $_GET['id'] ?? null;
 		if ($id) {
-			$controller = new \app\controllers\BesoinController($app->db());
+			$controller = new \app\controllers\BesoinController($app->db(), $app);
 			$controller->delete($id);
 		} else {
-			header('Location: /besoins');
+			header('Location: ' . $app->get('flight.base_url') . 'besoins');
 			exit;
 		}
 	});

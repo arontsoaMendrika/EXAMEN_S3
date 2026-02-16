@@ -7,8 +7,8 @@
         <h3><?=$message?></h3>
         <?php } ?>
         <div class="d-flex gap-2">
-            <a href="/dons" class="btn btn-primary">Gérer les Dons</a>
-            <a href="/besoins" class="btn btn-success">Gérer les Besoins</a>
+            <a href="<?php echo $base_url; ?>dons" class="btn btn-primary">Gérer les Dons</a>
+            <a href="<?php echo $base_url; ?>besoins" class="btn btn-success">Gérer les Besoins</a>
         </div>
     </div>
 </main>

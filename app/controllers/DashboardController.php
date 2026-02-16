@@ -27,6 +27,6 @@ class DashboardController {
 
 		$sinistres = $db->fetchAll($query);
 
-		$this->app->render('accueil', [ 'sinistres' => $sinistres ]);
+		$this->app->render('accueil', [ 'sinistres' => $sinistres, 'base_url' => $this->app->get('flight.base_url') ]);
 	}
 }

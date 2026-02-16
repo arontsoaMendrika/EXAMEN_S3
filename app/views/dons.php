@@ -47,7 +47,7 @@
 
 <!-- Navigation -->
 <div class="container nav-back">
-    <a href="/"><i class="fa fa-arrow-left"></i> Retour au tableau de bord</a>
+    <a href="<?php echo $base_url; ?>"><i class="fa fa-arrow-left"></i> Retour au tableau de bord</a>
 </div>
 
 <!-- Stats -->
@@ -168,7 +168,7 @@
 </div>
 
 <script>
-    var API_URL = '/api/dons';
+    var API_URL = '<?php echo $base_url; ?>api/dons';
     var deleteId = null;
 
     $(document).ready(function() {
