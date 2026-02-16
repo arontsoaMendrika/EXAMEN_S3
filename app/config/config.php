@@ -75,7 +75,7 @@ return [
 		'password' => '',  // Database password (never commit real passwords)
 
 		// SQLite Example:
-		//'file_path' => __DIR__ . $ds . '..' . $ds . '..' . $ds . 'database.sqlite', // Path to SQLite file
+		// 'file_path' => __DIR__ . $ds . '..' . $ds . 'database.sqlite', // Path to SQLite file
 	],
 
 	// Google OAuth Credentials
