@@ -26,13 +26,13 @@ class Besoin {
     /**
      * Créer un nouveau besoin
      */
-    public function create($titre, $description, $categorie_id, $user_id) {
-        $this->db->runQuery(
-            "INSERT INTO besoins (titre, description, categorie_id, user_id) VALUES (?, ?, ?, ?)",
-            [$titre, $description, $categorie_id, $user_id]
-        );
-        return true;
-    }
+        public function create($titre, $description, $categorie_id, $user_id, $ville) {
+            $this->db->runQuery(
+                "INSERT INTO besoins (titre, description, categorie_id, user_id, ville) VALUES (?, ?, ?, ?, ?)",
+                [$titre, $description, $categorie_id, $user_id, $ville]
+            );
+            return true;
+        }
     
     /**
      * Récupérer tous les besoins d'un utilisateur
@@ -48,4 +48,18 @@ class Besoin {
         
         return $this->toArray($rows);
     }
+
+        /**
+         * Récupérer tous les besoins par ville
+         */
+        public function findByVille($ville) {
+            $rows = $this->db->fetchAll("
+                SELECT b.*, c.nom as categorie_nom 
+                FROM besoins b
+                LEFT JOIN categorie c ON b.categorie_id = c.id
+                WHERE b.ville = ?
+                ORDER BY b.id DESC
+            ", [$ville]);
+            return $this->toArray($rows);
+        }
 }
