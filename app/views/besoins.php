@@ -55,9 +55,9 @@
             <tbody>
                 <?php foreach ($besoins as $besoin): ?>
                     <tr>
-                        <td><?= htmlspecialchars($besoin['ville']) ?></td>
-                        <td><?= htmlspecialchars($besoin['titre']) ?></td>
-                        <td><?= htmlspecialchars($besoin['description']) ?></td>
+                        <td><?= htmlspecialchars($besoin['ville'] ?? 'Non renseignée') ?></td>
+                        <td><?= htmlspecialchars($besoin['titre'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($besoin['description'] ?? '') ?></td>
                         <td><?= htmlspecialchars($besoin['quantite'] ?? '') ?></td>
                         <td><?= htmlspecialchars($besoin['prix_unitaire'] ?? '') ?></td>
                         <td><?= htmlspecialchars($besoin['categorie_nom'] ?? '') ?></td>
