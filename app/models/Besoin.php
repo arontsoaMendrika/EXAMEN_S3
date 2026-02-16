@@ -17,6 +17,17 @@ class Besoin {
             return is_array($row) ? $row : $row->getData();
         }, $rows);
     }
+
+    private function normalizeRow($row) {
+        // row may be array or Collection-like object
+        $r = is_array($row) ? $row : $row->getData();
+        // map DB schema to view-friendly keys
+        if (isset($r['nom'])) $r['titre'] = $r['nom'];
+        if (isset($r['type_besoin'])) $r['description'] = $r['type_besoin'];
+        if (isset($r['prix'])) $r['prix_unitaire'] = $r['prix'];
+        if (!isset($r['quantite']) && isset($r['quantite'])) $r['quantite'] = $r['quantite'];
+        return $r;
+    }
     
     private function rowToArray($row) {
         if (!$row || (is_object($row) && count($row) === 0)) return null;
@@ -27,10 +38,27 @@ class Besoin {
      * Créer un nouveau besoin
      */
     public function create($titre, $description, $quantite, $prix_unitaire, $categorie_id = null, $user_id = null, $ville = null) {
+        // Insert into besoins according to provided SQL schema (nom, type_besoin, prix, quantite)
+        // Insert into besoins with correct column order: nom, type_besoin, prix, quantite
         $this->db->runQuery(
-            "INSERT INTO besoins (titre, description, quantite, prix_unitaire, categorie_id, user_id, ville) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            [$titre, $description, $quantite, $prix_unitaire, $categorie_id, $user_id, $ville]
+            "INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES (?, ?, ?, ?)",
+            [$titre, $description, $prix_unitaire, $quantite]
         );
+
+        // get last insert id immediately
+        $besoin_id = $this->db->lastInsertId();
+
+        // Try to link with ville via sinistres if a ville name was provided
+        if ($ville && $besoin_id) {
+            // find ville id by name (trim to avoid spacing issues)
+            $v = $this->db->fetchAll("SELECT id FROM ville WHERE TRIM(nom) = ? LIMIT 1", [trim($ville)]);
+            $vArr = $this->toArray($v);
+            if (count($vArr) > 0 && isset($vArr[0]['id'])) {
+                $ville_id = $vArr[0]['id'];
+                $this->db->runQuery("INSERT INTO sinistres (ville_id, besoin_id) VALUES (?, ?)", [$ville_id, $besoin_id]);
+            }
+        }
+
         return true;
     }
 
@@ -38,8 +66,9 @@ class Besoin {
      * Récupérer tous les besoins
      */
     public function getAll() {
-        $rows = $this->db->fetchAll("SELECT b.*, c.nom as categorie_nom FROM besoins b LEFT JOIN categorie c ON b.categorie_id = c.id ORDER BY b.id DESC");
-        return $this->toArray($rows);
+        $rows = $this->db->fetchAll("SELECT b.*, v.nom AS ville FROM besoins b LEFT JOIN sinistres s ON b.id = s.besoin_id LEFT JOIN ville v ON s.ville_id = v.id ORDER BY b.id DESC");
+        $arr = $this->toArray($rows);
+        return array_map([$this, 'normalizeRow'], $arr);
     }
     
     /**
@@ -47,14 +76,15 @@ class Besoin {
      */
     public function findByUserId($user_id) {
         $rows = $this->db->fetchAll("
-            SELECT b.*, c.nom as categorie_nom 
+            SELECT b.*, v.nom AS ville
             FROM besoins b
-            LEFT JOIN categorie c ON b.categorie_id = c.id
+            LEFT JOIN sinistres s ON b.id = s.besoin_id
+            LEFT JOIN ville v ON s.ville_id = v.id
             WHERE b.user_id = ?
             ORDER BY b.id DESC
         ", [$user_id]);
-        
-        return $this->toArray($rows);
+        $arr = $this->toArray($rows);
+        return array_map([$this, 'normalizeRow'], $arr);
     }
 
         /**
@@ -62,20 +92,60 @@ class Besoin {
          */
         public function findByVille($ville) {
             $rows = $this->db->fetchAll("
-                SELECT b.*, c.nom as categorie_nom 
+                SELECT b.*, v.nom AS ville
                 FROM besoins b
-                LEFT JOIN categorie c ON b.categorie_id = c.id
-                WHERE b.ville = ?
+                LEFT JOIN sinistres s ON b.id = s.besoin_id
+                LEFT JOIN ville v ON s.ville_id = v.id
+                WHERE v.nom = ?
                 ORDER BY b.id DESC
             ", [$ville]);
-            return $this->toArray($rows);
+            $arr = $this->toArray($rows);
+            return array_map([$this, 'normalizeRow'], $arr);
         }
 
         /**
          * Supprimer un besoin
          */
         public function delete($id) {
-            $this->db->runQuery("DELETE FROM besoins WHERE id = ?", [$id]);
+                // Remove any sinistres associations first
+                $this->db->runQuery("DELETE FROM sinistres WHERE besoin_id = ?", [$id]);
+                $this->db->runQuery("DELETE FROM besoins WHERE id = ?", [$id]);
+            return true;
+        }
+
+        /**
+         * Récupérer un besoin par ID
+         */
+        public function getById($id) {
+            $rows = $this->db->fetchAll("SELECT b.*, v.nom AS ville FROM besoins b LEFT JOIN sinistres s ON b.id = s.besoin_id LEFT JOIN ville v ON s.ville_id = v.id WHERE b.id = ? LIMIT 1", [$id]);
+            $arr = $this->toArray($rows);
+            if (count($arr) > 0) {
+                return $this->normalizeRow($arr[0]);
+            }
+            return null;
+        }
+
+        /**
+         * Mettre à jour un besoin
+         */
+        public function update($id, $titre, $description, $quantite, $prix_unitaire, $ville = null) {
+            $this->db->runQuery(
+                "UPDATE besoins SET nom = ?, type_besoin = ?, prix = ?, quantite = ? WHERE id = ?",
+                [$titre, $description, $prix_unitaire, $quantite, $id]
+            );
+
+            // Update ville link
+            if ($ville) {
+                // Remove old link
+                $this->db->runQuery("DELETE FROM sinistres WHERE besoin_id = ?", [$id]);
+                // Find ville id
+                $v = $this->db->fetchAll("SELECT id FROM ville WHERE TRIM(nom) = ? LIMIT 1", [trim($ville)]);
+                $vArr = $this->toArray($v);
+                if (count($vArr) > 0 && isset($vArr[0]['id'])) {
+                    $ville_id = $vArr[0]['id'];
+                    $this->db->runQuery("INSERT INTO sinistres (ville_id, besoin_id) VALUES (?, ?)", [$ville_id, $id]);
+                }
+            }
             return true;
         }
 }

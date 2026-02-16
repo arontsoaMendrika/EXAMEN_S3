@@ -17,11 +17,11 @@ INSERT INTO ville (nom, region_id) VALUES ('Fianarantsoa', 1);
 INSERT INTO ville (nom, region_id) VALUES ('Antsirabe', 1);
 
 -- Besoins
-INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES ('Riz', 'Alimentation', 5000.00, 100);
-INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES ('Eau potable', 'Hydratation', 2000.00, 200);
-INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES ('Médicaments', 'Santé', 15000.00, 50);
-INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES ('Tentes', 'Abri', 25000.00, 30);
-INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES ('Vêtements', 'Vêtements', 8000.00, 150);
+INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES ('Riz', 'en nature', 5000.00, 100);
+INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES ('Eau potable', 'en nature', 2000.00, 200);
+INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES ('Toles', 'en materiel', 15000.00, 50);
+INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES ('huile', 'en nature', 25000.00, 30);
+INSERT INTO besoins (nom, type_besoin, prix, quantite) VALUES ('clou', 'en materiel', 8000.00, 150);
 
 -- Sinistres (liens entre villes et besoins)
 INSERT INTO sinistres (ville_id, besoin_id) VALUES (1, 1); -- Antananarivo a besoin de Riz

@@ -49,10 +49,11 @@ if (empty($app) === true) {
 $app->path(__DIR__ . $ds . '..' . $ds . '..');
 
 // Core config variables
-$app->set('flight.base_url', '/',);           // Base URL for your app. Change if app is in a subdirectory (e.g., '/myapp/')
+$app->set('flight.base_url', '/ETU004364/TRINOME_EXAMEN2/');           // Base URL for your app. Change if app is in a subdirectory (e.g., '/myapp/')
+$app->set('base_url', $app->get('flight.base_url'));   // Make base_url available globally
 $app->set('flight.case_sensitive', false);    // Set true for case sensitive routes. Default: false
 $app->set('flight.log_errors', true);         // Log errors to file. Recommended: true in production
-$app->set('flight.handle_errors', false);     // Let Tracy handle errors if false. Set true to use Flight's error handler
+$app->set('flight.handle_errors', true);     // Let Flight handle errors (Tracy can cause 500 if log dir missing)
 $app->set('flight.views.path', __DIR__ . $ds . '..' . $ds . 'views'); // Path to views/templates
 $app->set('flight.views.extension', '.php');  // View file extension (e.g., '.php', '.latte')
 $app->set('flight.content_length', false);    // Send content length header. Usually false unless required by proxy
@@ -69,10 +70,10 @@ return [
 	 *         Database Settings          *
 	 **************************************/
 	'database' => [
-		'host'     => '127.0.0.1',      // Database host (use 127.0.0.1 for XAMPP)
-		'dbname'   => 'cyclone',   // Database name (e.g., 'flightphp')
-		'user'     => 'root',  // Database user (e.g., 'root')
-		'password' => '',  // Database password (never commit real passwords)
+		'host'     => 'localhost',      // Database host (use 127.0.0.1 for XAMPP)
+		'dbname'   => 'db_s2_ETU004364',   // Database name (e.g., 'flightphp')
+		'user'     => 'ETU004364',  // Database user (e.g., 'root')
+		'password' => '6rZtjtKe',  // Database password (never commit real passwords)
 
 		// SQLite Example:
 		// 'file_path' => __DIR__ . $ds . '..' . $ds . 'database.sqlite', // Path to SQLite file

@@ -1,42 +1,52 @@
-<?php
-// Vue pour afficher les villes
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Liste des villes</title>
-    <link rel="stylesheet" href="/template/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/template/css/style.css">
-</head>
-<body>
-<div class="container mt-4">
-    <h1>Liste des villes</h1>
-    <form method="post" action="/villes/create">
-        <div class="row">
-            <div class="col-md-6">
-                <input type="text" name="nom" class="form-control" placeholder="Nom de la ville" required>
-            </div>
-            <div class="col-md-6">
-                <button type="submit" class="btn btn-info">Ajouter ville</button>
-            </div>
+<?php include 'header.php'; ?>
+
+<main>
+    <div class="page-header animate-in">
+        <h1><i class="fa-solid fa-city" style="color:var(--accent);"></i> Liste des villes</h1>
+        <p>Gérer les villes sinistrées enregistrées</p>
+    </div>
+
+    <!-- Formulaire d'ajout -->
+    <div class="card-custom animate-in">
+        <div class="card-title">
+            <i class="fa-solid fa-plus-circle"></i> Ajouter une ville
         </div>
-    </form>
-    <hr>
-    <table class="table table-bordered mt-4">
-        <thead>
-            <tr>
-                <th>Nom</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($villes as $ville): ?>
-                <tr>
-                    <td><?= htmlspecialchars($ville['nom']) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
-</body>
-</html>
+        <form method="post" action="<?php echo $base_url; ?>villes/create">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <input type="text" name="nom" class="form-control-custom" placeholder="Nom de la ville" required>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn-primary-custom" style="width:100%;justify-content:center;padding:10px 20px;">
+                        <i class="fa-solid fa-plus"></i> Ajouter ville
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Table des villes -->
+    <div class="card-custom animate-in">
+        <div class="card-title">
+            <i class="fa-solid fa-table-list"></i> Villes enregistrées
+        </div>
+        <div class="table-responsive">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th><i class="fa-solid fa-city"></i> Nom de la ville</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($villes as $ville): ?>
+                        <tr>
+                            <td><strong><?= htmlspecialchars($ville['nom']) ?></strong></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<?php include 'footer.php'; ?>
