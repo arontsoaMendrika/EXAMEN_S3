@@ -14,20 +14,27 @@ class BesoinController {
     public function index() {
         $besoinModel = new Besoin($this->db);
         $villeModel = new Ville($this->db);
-        $besoins = $besoinModel->findByVille(''); // Par défaut, toutes les villes
+        $besoins = $besoinModel->getAll();
         $villes = $villeModel->getAll();
         require __DIR__ . '/../views/besoins.php';
     }
 
     public function create($data) {
         $besoinModel = new Besoin($this->db);
-        $besoinModel->create(
-            $data['titre'],
-            $data['description'],
-            $data['categorie_id'],
-            $data['user_id'],
-            $data['ville']
-        );
+        $titre = $data['titre'] ?? '';
+        $description = $data['description'] ?? '';
+        $quantite = $data['quantite'] ?? null;
+        $prix_unitaire = $data['prix_unitaire'] ?? null;
+        $ville = $data['ville'] ?? null;
+
+        $besoinModel->create($titre, $description, $quantite, $prix_unitaire, null, null, $ville);
+        header('Location: /besoins');
+        exit;
+    }
+
+    public function delete($id) {
+        $besoinModel = new Besoin($this->db);
+        $besoinModel->delete($id);
         header('Location: /besoins');
         exit;
     }

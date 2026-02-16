@@ -22,27 +22,6 @@
     <header>
         <div class="header-area">
             <div class="main-header">
-                <div class="header-top black-bg d-none d-md-block">
-                    <div class="container">
-                        <div class="col-xl-12">
-                            <div class="row d-flex justify-content-between align-items-center">
-                                <div class="header-info-left">
-                                    <ul>
-                                        <li><img src="/template/img/icon/header_icon1.png" alt="">34ºc, Sunny </li>
-                                        <li><img src="/template/img/icon/header_icon1.png" alt="">Tuesday, 18:00</li>
-                                    </ul>
-                                </div>
-                                <div class="header-info-right">
-                                    <ul class="header-social">
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                        <li> <a href="#"><i class="fab fa-pinterest-p"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="header-mid d-none d-md-block">
                     <div class="container">
                         <div class="row d-flex align-items-center">
@@ -70,16 +49,13 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="/">Accueil</a></li>
-                                            <li><a href="#">À propos</a></li>
-                                            <li><a href="#">Causes</a></li>
-                                            <li><a href="#">Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>
                             </div>
                             <div class="col-xl-2 col-lg-2 col-md-2">
                                 <div class="header-right-btn f-right d-none d-lg-block">
-                                    <a href="#" class="btn header-btn">Faire un don</a>
+                                    <a href="dons.php" class="btn header-btn">Faire un don</a>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -133,64 +109,13 @@
     <!-- Footer -->
     <footer>
         <div class="footer-wrapper section-bg2" data-background="/template/img/gallery/footer_bg.png">
-            <div class="footer-area footer-padding">
-                <div class="container">
-                    <div class="row justify-content-between">
-                        <div class="col-xl-4 col-lg-4 col-md-5 col-sm-8">
-                            <div class="single-footer-caption mb-50">
-                                <div class="single-footer-caption mb-30">
-                                    <div class="footer-logo mb-25">
-                                        <a href="/"><img src="/template/img/logo/logo2_footer.png" alt=""></a>
-                                    </div>
-                                    <div class="footer-tittle">
-                                        <div class="footer-pera">
-                                            <p>Aider les communautés touchées par les cyclones.</p>
-                                        </div>
-                                    </div>
-                                    <div class="footer-social">
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-3 col-sm-5">
-                            <div class="single-footer-caption mb-50">
-                                <div class="footer-tittle">
-                                    <h4>Liens rapides</h4>
-                                    <ul>
-                                        <li><a href="/">Accueil</a></li>
-                                        <li><a href="#">À propos</a></li>
-                                        <li><a href="#">Causes</a></li>
-                                        <li><a href="#">Contact</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                            <div class="single-footer-caption mb-50">
-                                <div class="footer-tittle">
-                                    <h4>Contact</h4>
-                                    <ul>
-                                        <li><a href="#">+261 34 12 345 67</a></li>
-                                        <li><a href="#">info@cycloneaid.org</a></li>
-                                        <li>Antananarivo, Madagascar</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="footer-bottom-area">
                 <div class="container">
                     <div class="footer-border">
                         <div class="row d-flex align-items-center">
                             <div class="col-xl-12">
                                 <div class="footer-copy-right text-center">
-                                    <p>Copyright &copy; 2026 Cyclone Aid. Tous droits réservés.</p>
+                                    Développé par : <strong>ETU004081</strong> &amp; <strong>ETU004342</strong> &amp; <strong>ETU004364</strong>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +125,7 @@
         </div>
     </footer>
 
-    <!-- JS -->
+
     <script src="/template/js/vendor/modernizr-3.5.0.min.js"></script>
     <script src="/template/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="/template/js/popper.min.js"></script>
