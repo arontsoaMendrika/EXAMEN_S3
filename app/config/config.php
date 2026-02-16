@@ -49,11 +49,7 @@ if (empty($app) === true) {
 $app->path(__DIR__ . $ds . '..' . $ds . '..');
 
 // Core config variables
-<<<<<<< HEAD
-$app->set('flight.base_url', '');           // Base URL for your app. Change if app is in a subdirectory (e.g., '/myapp/')
-=======
 $app->set('flight.base_url', '/');           // Base URL for your app. Change if app is in a subdirectory (e.g., '/myapp/')
->>>>>>> ab10278 (remodification)
 $app->set('base_url', $app->get('flight.base_url'));   // Make base_url available globally
 $app->set('flight.case_sensitive', false);    // Set true for case sensitive routes. Default: false
 $app->set('flight.log_errors', true);         // Log errors to file. Recommended: true in production
@@ -74,8 +70,6 @@ return [
 	 *         Database Settings          *
 	 **************************************/
 	'database' => [
-<<<<<<< HEAD
-=======
 
 
 		'host'     => 'localhost',      // Database host (use 127.0.0.1 for XAMPP)
@@ -83,18 +77,10 @@ return [
 		'user'     => 'root',  // Database user (e.g., 'root')
 		'password' => 'root', 
 
->>>>>>> ab10278 (remodification)
 		// 'host'     => 'localhost',      // Database host (use 127.0.0.1 for XAMPP)
 		// 'dbname'   => 'db_s2_ETU004364',   // Database name (e.g., 'flightphp')
 		// 'user'     => 'ETU004364',  // Database user (e.g., 'root')
 		// 'password' => '6rZtjtKe',  // Database password (never commit real passwords)
-<<<<<<< HEAD
-		'host'     => '127.0.0.1',      // Database host (use 127.0.0.1 for XAMPP)
-		'dbname'   => 'cyclone',   // Database name (e.g., 'flightphp')
-		'user'     => 'root',  // Database user (e.g., 'root')
-		'password' => '',  // Database password (never commit real passwords)
-=======
->>>>>>> ab10278 (remodification)
 
 		// SQLite Example:
 		// 'file_path' => __DIR__ . $ds . '..' . $ds . 'database.sqlite', // Path to SQLite file
