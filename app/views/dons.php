@@ -84,23 +84,36 @@
         });
 
         function loadDons() {
-            $.get('/api/dons', function(data) {
-                const tbody = $('#donsTable tbody');
-                tbody.empty();
-                data.forEach(don => {
-                    tbody.append(`
-                        <tr>
-                            <td>${don.id}</td>
-                            <td>${don.nom}</td>
-                            <td>${don.montant}</td>
-                            <td>${don.date_don}</td>
-                            <td>
-                                <button class="btn btn-sm btn-warning" onclick="editDon(${don.id})">Modifier</button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteDon(${don.id})">Supprimer</button>
-                            </td>
-                        </tr>
-                    `);
-                });
+            $.ajax({
+                url: '/api/dons',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    const tbody = $('#donsTable tbody');
+                    tbody.empty();
+                    if (data && data.length > 0) {
+                        data.forEach(don => {
+                            tbody.append(`
+                                <tr>
+                                    <td>${don.id}</td>
+                                    <td>${don.nom}</td>
+                                    <td>${don.montant}</td>
+                                    <td>${don.date_don}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning" onclick="editDon(${don.id})">Modifier</button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteDon(${don.id})">Supprimer</button>
+                                    </td>
+                                </tr>
+                            `);
+                        });
+                    } else {
+                        tbody.append('<tr><td colspan="5" class="text-center">Aucun don trouvé</td></tr>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur chargement dons:', status, error);
+                    $('#donsTable tbody').html('<tr><td colspan="5" class="text-center text-danger">Erreur de chargement</td></tr>');
+                }
             });
         }
 
