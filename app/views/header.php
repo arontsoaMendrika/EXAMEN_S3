@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($title) ? $title : 'Tableau de bord - Villes et Sinistres'; ?></title>
-    <!-- CSS -->
+
     <link rel="stylesheet" href="/template/css/bootstrap.min.css">
     <link rel="stylesheet" href="/template/css/owl.carousel.min.css">
     <link rel="stylesheet" href="/template/css/magnific-popup.css">
@@ -16,9 +16,10 @@
     <link rel="stylesheet" href="/template/css/animate.css">
     <link rel="stylesheet" href="/template/css/slicknav.css">
     <link rel="stylesheet" href="/template/css/style.css">
+    <script src="/template/js/vendor/jquery-1.12.4.min.js"></script>
 </head>
 <body>
-    <!-- Header -->
+  
     <header>
         <div class="header-area">
             <div class="main-header">
@@ -48,7 +49,7 @@
                                 <div class="main-menu d-none d-md-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="/">Accueil</a></li>
+                                            <li><a href="/besoins">Voir les besoins</a></li>
                                         </ul>
                                     </nav>
                                 </div>

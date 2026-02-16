@@ -1,42 +1,36 @@
-<?php
-// Vue pour afficher les villes
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Liste des villes</title>
-    <link rel="stylesheet" href="/template/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/template/css/style.css">
-</head>
-<body>
-<div class="container mt-4">
-    <h1>Liste des villes</h1>
-    <form method="post" action="/villes/create">
-        <div class="row">
-            <div class="col-md-6">
-                <input type="text" name="nom" class="form-control" placeholder="Nom de la ville" required>
+<?php include 'header.php'; ?>
+
+<main>
+    <div class="container mt-5 p-4 rounded shadow bg-white">
+        <h1 class="mb-4 text-primary">Liste des villes</h1>
+        <form method="post" action="/villes/create" class="mb-4">
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <input type="text" name="nom" class="form-control border-primary" placeholder="Nom de la ville" required>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary w-100">Ajouter ville</button>
+                </div>
             </div>
-            <div class="col-md-6">
-                <button type="submit" class="btn btn-info">Ajouter ville</button>
-            </div>
+        </form>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover mt-4 align-middle">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Nom</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($villes as $ville): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($ville['nom']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
-    </form>
-    <hr>
-    <table class="table table-bordered mt-4">
-        <thead>
-            <tr>
-                <th>Nom</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($villes as $ville): ?>
-                <tr>
-                    <td><?= htmlspecialchars($ville['nom']) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
-</body>
-</html>
+    </div>
+</main>
+
+<?php include 'footer.php'; ?>

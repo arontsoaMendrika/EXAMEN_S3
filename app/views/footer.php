@@ -1,4 +1,3 @@
-    <!-- Footer -->
     <footer>
         <div class="footer-wrapper section-bg2" data-background="/template/img/gallery/footer_bg.png">
             <div class="footer-bottom-area">
@@ -19,7 +18,6 @@
 
     <!-- JS -->
     <script src="/template/js/vendor/modernizr-3.5.0.min.js"></script>
-    <script src="/template/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="/template/js/popper.min.js"></script>
     <script src="/template/js/bootstrap.min.js"></script>
     <script src="/template/js/jquery.slicknav.min.js"></script>
