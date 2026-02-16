@@ -67,10 +67,11 @@ return [
 	 **************************************/
 	'database' => [
 		// MySQL Example:
-		'host'     => 'localhost',      // Database host (e.g., 'localhost', 'db.example.com')
+		'host'     => '127.0.0.1',      // Database host (e.g., 'localhost', 'db.example.com')
+
 		'dbname'   => 'cyclone',   // Database name (e.g., 'flightphp')
 		'user'     => 'root',  // Database user (e.g., 'root')
-		'password' => 'root',  // Database password (never commit real passwords)
+		'password' => '',  // Database password (never commit real passwords)
 
 		// SQLite Example:
 		// 'file_path' => __DIR__ . $ds . '..' . $ds . 'database.sqlite', // Path to SQLite file
