@@ -66,22 +66,14 @@ return [
 	 *         Database Settings          *
 	 **************************************/
 	'database' => [
-<<<<<<< HEAD
-				'host'     => 'localhost:3306',      // Database host (e.g., 'localhost', 'db.example.com')
-=======
-<<<<<<< HEAD
 		// MySQL Example:
-		'host'     => '127.0.0.1',      // Database host (e.g., 'localhost', 'db.example.com')
-=======
-				'host'     => 'localhost',      // Database host (e.g., 'localhost', 'db.example.com')
->>>>>>> 53f5ffac1b427d052815540dc5a389acc6c9a3fe
->>>>>>> ad3246d446cb4a4a1c564d3b901f6e332e31c438
+		'host'     => 'localhost',      // Database host (e.g., 'localhost', 'db.example.com')
 		'dbname'   => 'cyclone',   // Database name (e.g., 'flightphp')
 		'user'     => 'root',  // Database user (e.g., 'root')
-		'password' => '',  // Database password (never commit real passwords)
+		'password' => 'root',  // Database password (never commit real passwords)
 
 		// SQLite Example:
-		//'file_path' => __DIR__ . $ds . '..' . $ds . '..' . $ds . 'database.sqlite', // Path to SQLite file
+		// 'file_path' => __DIR__ . $ds . '..' . $ds . 'database.sqlite', // Path to SQLite file
 	],
 
 	// Google OAuth Credentials
