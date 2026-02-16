@@ -38,10 +38,27 @@ class Besoin {
      * Créer un nouveau besoin
      */
     public function create($titre, $description, $quantite, $prix_unitaire, $categorie_id = null, $user_id = null, $ville = null) {
+        // Insert into besoins according to provided SQL schema (nom, type_besoin, prix, quantite)
         $this->db->runQuery(
-            "INSERT INTO besoins (titre, description, quantite, prix_unitaire, categorie_id, user_id, ville) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            [$titre, $description, $quantite, $prix_unitaire, $categorie_id, $user_id, $ville]
+            "INSERT INTO besoins (nom, type_besoin, quantite, prix) VALUES (?, ?, ?, ?)",
+            [$titre, $description, $quantite, $prix_unitaire]
         );
+
+        // Try to link with ville via sinistres if a ville name was provided
+        if ($ville) {
+            // find ville id by name
+            $v = $this->db->fetchAll("SELECT id FROM ville WHERE nom = ? LIMIT 1", [$ville]);
+            $vArr = $this->toArray($v);
+            if (count($vArr) > 0 && isset($vArr[0]['id'])) {
+                $ville_id = $vArr[0]['id'];
+                // get last insert id
+                $besoin_id = $this->db->lastInsertId();
+                if ($besoin_id) {
+                    $this->db->runQuery("INSERT INTO sinistres (ville_id, besoin_id) VALUES (?, ?)", [$ville_id, $besoin_id]);
+                }
+            }
+        }
+
         return true;
     }
 
@@ -90,7 +107,9 @@ class Besoin {
          * Supprimer un besoin
          */
         public function delete($id) {
-            $this->db->runQuery("DELETE FROM besoins WHERE id = ?", [$id]);
+                // Remove any sinistres associations first
+                $this->db->runQuery("DELETE FROM sinistres WHERE besoin_id = ?", [$id]);
+                $this->db->runQuery("DELETE FROM besoins WHERE id = ?", [$id]);
             return true;
         }
 }
