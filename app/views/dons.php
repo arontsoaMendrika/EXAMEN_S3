@@ -43,9 +43,27 @@
             <div class="card-title" style="margin-bottom:0;">
                 <i class="fa-solid fa-table-list"></i> Liste des Dons
             </div>
+<<<<<<< Updated upstream
             <button class="btn-primary-custom" onclick="openAddModal()">
                 <i class="fa-solid fa-plus"></i> Ajouter un Don
             </button>
+=======
+            <div style="display:flex;gap:8px;align-items:center;">
+                <label for="filterOrdre" style="margin:0 6px 0 0;font-weight:700;color:var(--dark-600);font-size:13px;">Filtrer ordre:</label>
+                <select id="filterOrdre" class="form-control-custom" style="width:220px;">
+                    <option value="all">Tous</option>
+                    <option value="priority">Priority (FIFO)</option>
+                    <option value="desc">Desc (petit besoin d'abord)</option>
+                    <option value="proportional">Proportional</option>
+                </select>
+                <button class="btn-outline-custom" id="btnResetAll" title="Réinitialiser achats (pour tests)">
+                    <i class="fa-solid fa-rotate-left"></i> Réinitialiser
+                </button>
+                <button class="btn-primary-custom" onclick="openAddModal()">
+                    <i class="fa-solid fa-plus"></i> Ajouter un Don
+                </button>
+            </div>
+>>>>>>> Stashed changes
         </div>
 
         <div id="loading" class="loading-spinner">
@@ -60,6 +78,10 @@
                         <th>#</th>
                         <th><i class="fa-solid fa-user"></i> Nom du donateur</th>
                         <th><i class="fa-solid fa-coins"></i> Montant (Ar)</th>
+<<<<<<< Updated upstream
+=======
+                        <th><i class="fa-solid fa-list-ol"></i> Ordre</th>
+>>>>>>> Stashed changes
                         <th><i class="fa-solid fa-calendar"></i> Date du don</th>
                         <th><i class="fa-solid fa-gear"></i> Actions</th>
                     </tr>
@@ -109,6 +131,19 @@
                         </label>
                         <input type="date" class="form-control-custom" id="date_don" required>
                     </div>
+<<<<<<< Updated upstream
+=======
+                    <div class="form-group mb-3">
+                        <label for="ordre" style="font-weight:700;font-size:13px;color:var(--dark-600);margin-bottom:6px;display:block;">
+                            <i class="fa-solid fa-list-ol"></i> Ordre de distribution (pour ce don)
+                        </label>
+                        <select id="ordre" class="form-control-custom">
+                            <option value="priority">Ordre prioritaire (FIFO)</option>
+                            <option value="desc">Ordre décroissant (petit besoin d'abord)</option>
+                            <option value="proportional">Ordre proportionnel</option>
+                        </select>
+                    </div>
+>>>>>>> Stashed changes
                     <div id="formError" class="alert alert-danger" style="display:none;border-radius:var(--radius);"></div>
                     <button type="submit" class="btn-primary-custom" style="width:100%;justify-content:center;padding:12px;">
                         <i class="fa-solid fa-floppy-disk"></i> <span id="btnText">Sauvegarder</span>
@@ -162,7 +197,8 @@
             var data = {
                 nom: $('#nom').val().trim(),
                 montant: parseFloat($('#montant').val()),
-                date_don: $('#date_don').val()
+                date_don: $('#date_don').val(),
+                ordre: $('#ordre').val()
             };
 
             if (!data.nom || !data.montant || !data.date_don) {
@@ -177,6 +213,45 @@
             }
         });
     });
+
+    // Fallback: if Bootstrap modal is not available (or JS error), open modal manually
+    function safeShowModal(selector) {
+        if ($.fn && $.fn.modal && typeof $.fn.modal === 'function') {
+            $(selector).modal('show');
+            return;
+        }
+        // fallback: simple show
+        var el = document.querySelector(selector);
+        if (!el) return;
+        el.style.display = 'block';
+        el.classList.add('show');
+        // create backdrop
+        var backdrop = document.createElement('div');
+        backdrop.className = 'modal-backdrop fade show';
+        document.body.appendChild(backdrop);
+        // close handlers
+        var closeBtn = el.querySelector('[data-dismiss]') || el.querySelector('.close');
+        if (closeBtn) closeBtn.addEventListener('click', function(){ hideFallbackModal(el, backdrop); });
+    }
+
+    function hideFallbackModal(el, backdrop) {
+        if (el) { el.style.display = 'none'; el.classList.remove('show'); }
+        if (backdrop && backdrop.parentNode) backdrop.parentNode.removeChild(backdrop);
+    }
+
+    function safeHideModal(selector) {
+        if ($.fn && $.fn.modal && typeof $.fn.modal === 'function') {
+            $(selector).modal('hide');
+            return;
+        }
+        var el = document.querySelector(selector);
+        if (!el) return;
+        // remove any backdrop
+        var backdrop = document.querySelector('.modal-backdrop');
+        hideFallbackModal(el, backdrop);
+    }
+
+    // openAddModal defined once below (uses safeShowModal)
 
     function showToast(message, type) {
         var bg = type === 'success' ? '#10B981' : type === 'error' ? '#EF4444' : '#6366F1';
@@ -213,6 +288,7 @@
                                 '<td>' + don.id + '</td>' +
                                 '<td><strong>' + escapeHtml(don.nom) + '</strong></td>' +
                                 '<td class="montant-col">' + formatMontant(don.montant) + ' Ar</td>' +
+                                '<td>' + (don.ordre ? escapeHtml(don.ordre) : 'priority') + '</td>' +
                                 '<td>' + formatDate(don.date_don) + '</td>' +
                                 '<td>' +
                                     '<button class="btn-warning-custom" onclick="editDon(' + don.id + ')" style="margin-right:6px;">' +
@@ -256,7 +332,7 @@
         $('#modalTitle').html('<i class="fa-solid fa-plus"></i> Ajouter un Don');
         $('#btnText').text('Sauvegarder');
         $('#date_don').val(new Date().toISOString().split('T')[0]);
-        $('#donModal').modal('show');
+        safeShowModal('#donModal');
     }
 
     function createDon(data) {
@@ -266,7 +342,7 @@
             data: data,
             dataType: 'json',
             success: function() {
-                $('#donModal').modal('hide');
+                safeHideModal('#donModal');
                 showToast('Don ajouté avec succès !', 'success');
                 loadDons();
             },
@@ -288,10 +364,11 @@
                 $('#nom').val(don.nom);
                 $('#montant').val(don.montant);
                 $('#date_don').val(don.date_don);
+                $('#ordre').val(don.ordre || 'priority');
                 $('#formError').hide();
                 $('#modalTitle').html('<i class="fa-solid fa-pen"></i> Modifier le Don');
                 $('#btnText').text('Mettre à jour');
-                $('#donModal').modal('show');
+                safeShowModal('#donModal');
             },
             error: function() {
                 showToast('Impossible de charger le don.', 'error');
@@ -306,7 +383,7 @@
             data: data,
             dataType: 'json',
             success: function() {
-                $('#donModal').modal('hide');
+                safeHideModal('#donModal');
                 showToast('Don modifié avec succès !', 'success');
                 loadDons();
             },
@@ -320,7 +397,7 @@
 
     function deleteDon(id) {
         deleteId = id;
-        $('#deleteModal').modal('show');
+        safeShowModal('#deleteModal');
     }
 
     function confirmDelete() {
@@ -330,18 +407,53 @@
             type: 'DELETE',
             dataType: 'json',
             success: function() {
-                $('#deleteModal').modal('hide');
+                safeHideModal('#deleteModal');
                 showToast('Don supprimé avec succès !', 'success');
                 deleteId = null;
                 loadDons();
             },
             error: function() {
-                $('#deleteModal').modal('hide');
+                safeHideModal('#deleteModal');
                 showToast('Erreur lors de la suppression.', 'error');
                 deleteId = null;
             }
         });
     }
+
+    // --- Filter by ordre (client-side) ---
+    $(document).on('change', '#filterOrdre', function() {
+        var val = $(this).val();
+        $('#donsTable tbody tr').each(function() {
+            var ordreText = $(this).find('td').eq(3).text().trim();
+            if (val === 'all' || ordreText === val) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+
+    // Reset purchases (calls existing API)
+    $('#btnResetAll').on('click', function() {
+        if (!confirm('Réinitialiser les achats (et réappliquer le jeu d\'initialisation) ?')) return;
+        var btn = $(this);
+        btn.prop('disabled', true).text('Réinitialisation...');
+        $.ajax({
+            url: '<?php echo $base_url; ?>api/achats/reset',
+            type: 'POST',
+            dataType: 'json',
+            success: function(res) {
+                btn.prop('disabled', false).text('Réinitialiser');
+                if (res.success) {
+                    showToast('Réinitialisation effectuée.', 'success');
+                    loadDons();
+                } else {
+                    showToast('Erreur: ' + (res.error || 'Impossible de réinitialiser'), 'error');
+                }
+            },
+            error: function() { btn.prop('disabled', false).text('Réinitialiser'); showToast('Erreur de connexion', 'error'); }
+        });
+    });
 
     function formatMontant(val) {
         return parseFloat(val).toLocaleString('fr-FR');

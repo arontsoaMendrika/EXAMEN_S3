@@ -31,6 +31,12 @@
         $is_besoins = strpos($current_uri, 'besoins') !== false;
         $is_dons = strpos($current_uri, 'dons') !== false;
         $is_villes = strpos($current_uri, 'villes') !== false;
+<<<<<<< Updated upstream
+=======
+        $is_achats = strpos($current_uri, 'achats') !== false;
+        $is_simulation = strpos($current_uri, 'simulation') !== false;
+        $is_recap = strpos($current_uri, 'recapitulation') !== false;
+>>>>>>> Stashed changes
     ?>
 </head>
 <body>
@@ -74,6 +80,25 @@
                 <span>Villes</span>
             </a>
         </div>
+<<<<<<< Updated upstream
+=======
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Gestion V2</div>
+            <a href="<?php echo $base_url; ?>achats" class="sidebar-link <?php echo $is_achats ? 'active' : ''; ?>">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Achats</span>
+            </a>
+            <a href="<?php echo $base_url; ?>simulation" class="sidebar-link <?php echo $is_simulation ? 'active' : ''; ?>">
+                <i class="fa-solid fa-flask"></i>
+                <span>Simulation</span>
+            </a>
+            <a href="<?php echo $base_url; ?>recapitulation" class="sidebar-link <?php echo $is_recap ? 'active' : ''; ?>">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Récapitulation</span>
+            </a>
+        </div>
+>>>>>>> Stashed changes
     </nav>
 
     <div class="sidebar-footer">
@@ -98,6 +123,12 @@
             <a href="<?php echo $base_url; ?>dons" class="btn-primary-custom">
                 <i class="fa-solid fa-plus"></i> Nouveau Don
             </a>
+<<<<<<< Updated upstream
+=======
+            <a href="<?php echo $base_url; ?>config" class="btn-outline-custom" style="margin-left:8px;">
+                <i class="fa-solid fa-cog"></i> Configuration
+            </a>
+>>>>>>> Stashed changes
         </div>
     </header>
 
@@ -106,4 +137,8 @@
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('sidebarOverlay').classList.toggle('active');
         }
+<<<<<<< Updated upstream
     </script>
+=======
+    </script>
+>>>>>>> Stashed changes

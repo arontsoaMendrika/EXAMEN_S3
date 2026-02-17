@@ -40,7 +40,8 @@ class ApiDonsController
         $id = $this->donModel->create([
             'nom' => $data->nom,
             'montant' => $data->montant,
-            'date_don' => $data->date_don
+            'date_don' => $data->date_don,
+            'ordre' => isset($data->ordre) ? $data->ordre : 'priority'
         ]);
         Flight::json(['id' => $id, 'message' => 'Don created'], 201);
     }
@@ -55,7 +56,8 @@ class ApiDonsController
         $rows = $this->donModel->update($id, [
             'nom' => $data->nom,
             'montant' => $data->montant,
-            'date_don' => $data->date_don
+            'date_don' => $data->date_don,
+            'ordre' => isset($data->ordre) ? $data->ordre : 'priority'
         ]);
         if ($rows > 0) {
             Flight::json(['message' => 'Don updated']);

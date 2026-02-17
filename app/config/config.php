@@ -62,6 +62,18 @@ $app->set('flight.content_length', false);    // Send content length header. Usu
 $nonce = bin2hex(random_bytes(16));
 $app->set('csp_nonce', $nonce);
 
+// Pourcentage des frais de gestion appliqués aux achats (ex: 5 pour 5%)
+$app->set('frais_achat_percent', 5);
+
+// Charger les paramètres persistés si présents (app/config/settings.json)
+$settingsFile = __DIR__ . DIRECTORY_SEPARATOR . 'settings.json';
+if (file_exists($settingsFile)) {
+	$data = json_decode(file_get_contents($settingsFile), true);
+	if (is_array($data) && isset($data['frais_achat_percent']) && is_numeric($data['frais_achat_percent'])) {
+		$app->set('frais_achat_percent', floatval($data['frais_achat_percent']));
+	}
+}
+
 /**********************************************
  *           User Configuration               *
  **********************************************/
@@ -73,6 +85,7 @@ return [
 
 
 		'host'     => 'localhost',      // Database host (use 127.0.0.1 for XAMPP)
+<<<<<<< Updated upstream
 		'dbname'   => 'cyclone',   // Database name (e.g., 'flightphp')
 		'user'     => 'root',  // Database user (e.g., 'root')
 		'password' => 'root', 
@@ -81,6 +94,12 @@ return [
 		// 'dbname'   => 'db_s2_ETU004364',   // Database name (e.g., 'flightphp')
 		// 'user'     => 'ETU004364',  // Database user (e.g., 'root')
 		// 'password' => '6rZtjtKe',  // Database password (never commit real passwords)
+=======
+		'dbname'   => 'db_s2_ETU004364',   // Database name (e.g., 'flightphp')
+		'port'     => 3306,              // Database port (optional, default 3306)
+		'user'     => 'ETU004364',  // Database user (e.g., 'root')
+		'password' => '6rZtjtKe',  // Database password (never commit real passwords)
+>>>>>>> Stashed changes
 
 		// SQLite Example:
 		// 'file_path' => __DIR__ . $ds . '..' . $ds . 'database.sqlite', // Path to SQLite file

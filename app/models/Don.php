@@ -28,15 +28,17 @@ class Don
 
     public function create($data)
     {
-        $stmt = $this->db->prepare("INSERT INTO dons (nom, montant, date_don) VALUES (?, ?, ?)");
-        $stmt->execute([$data['nom'], $data['montant'], $data['date_don']]);
+        $ordre = $data['ordre'] ?? 'priority';
+        $stmt = $this->db->prepare("INSERT INTO dons (nom, montant, date_don, ordre) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$data['nom'], $data['montant'], $data['date_don'], $ordre]);
         return $this->db->lastInsertId();
     }
 
     public function update($id, $data)
     {
-        $stmt = $this->db->prepare("UPDATE dons SET nom = ?, montant = ?, date_don = ? WHERE id = ?");
-        $stmt->execute([$data['nom'], $data['montant'], $data['date_don'], $id]);
+        $ordre = $data['ordre'] ?? 'priority';
+        $stmt = $this->db->prepare("UPDATE dons SET nom = ?, montant = ?, date_don = ?, ordre = ? WHERE id = ?");
+        $stmt->execute([$data['nom'], $data['montant'], $data['date_don'], $ordre, $id]);
         return $stmt->rowCount();
     }
 

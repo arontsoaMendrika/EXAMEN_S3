@@ -71,6 +71,54 @@ $router->group('', function(Router $router) use ($app) {
 		$controller->create($_POST);
 	});
 
+<<<<<<< Updated upstream
+=======
+	// === V2 : Achats ===
+	$router->get('/achats', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->index();
+	});
+
+	$router->post('/achats/create', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->create($_POST);
+	});
+
+	// === V2 : Simulation (page Ajax) ===
+	$router->get('/simulation', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->simulation();
+	});
+
+	// Distribution / Reset API
+	$router->post('/api/achats/distribute', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->apiDistribute();
+	});
+
+	$router->post('/api/achats/reset', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->apiReset();
+	});
+
+	// === V2 : Récapitulation (page Ajax) ===
+	$router->get('/recapitulation', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->recapitulation();
+	});
+
+	// Configuration applicative (modifier frais de gestion)
+	$router->get('/config', function() use ($app) {
+		$controller = new \app\controllers\ConfigController($app);
+		$controller->index();
+	});
+
+	$router->post('/config/update', function() use ($app) {
+		$controller = new \app\controllers\ConfigController($app);
+		$controller->update($_POST);
+	});
+
+>>>>>>> Stashed changes
 	$router->group('/api', function() use ($router) {
 		$router->get('/users', [ ApiExampleController::class, 'getUsers' ]);
 		$router->get('/users/@id:[0-9]+', [ ApiExampleController::class, 'getUser' ]);
@@ -82,6 +130,26 @@ $router->group('', function(Router $router) use ($app) {
 		$router->post('/dons', [ ApiDonsController::class, 'createDon' ]);
 		$router->put('/dons/@id:[0-9]+', [ ApiDonsController::class, 'updateDon' ]);
 		$router->delete('/dons/@id:[0-9]+', [ ApiDonsController::class, 'deleteDon' ]);
+
+		// V2 API - Simulation
+		$router->post('/achats/simuler', function() use ($router) {
+			$app = \Flight::app();
+			$controller = new \app\controllers\AchatController($app->db(), $app);
+			$controller->apiSimuler();
+		});
+
+		$router->post('/achats/valider', function() use ($router) {
+			$app = \Flight::app();
+			$controller = new \app\controllers\AchatController($app->db(), $app);
+			$controller->apiValider();
+		});
+
+		// V2 API - Récapitulation
+		$router->get('/recap', function() use ($router) {
+			$app = \Flight::app();
+			$controller = new \app\controllers\AchatController($app->db(), $app);
+			$controller->apiRecap();
+		});
 	});
 	
 }, [ SecurityHeadersMiddleware::class ]);
