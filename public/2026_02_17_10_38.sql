@@ -20,3 +20,10 @@ CREATE INDEX idx_besoins_statut ON besoins(statut);
 -- renvoie ce champ dans la simulation et la distribution. Si vous avez
 -- une sauvegarde de la base, exécutez ces commandes dans votre environnement
 -- de développement ou production avec précaution.
+
+-- 4) Ajouter colonne `ordre` sur `dons` pour choisir la stratégie liée au don
+ALTER TABLE dons
+ADD COLUMN ordre VARCHAR(32) NOT NULL DEFAULT 'priority';
+
+-- Mettre à jour les dons existants pour avoir la valeur par défaut
+UPDATE dons SET ordre = 'priority' WHERE ordre IS NULL OR ordre = '';
