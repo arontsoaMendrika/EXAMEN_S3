@@ -21,6 +21,99 @@ $router->group('', function(Router $router) use ($app) {
 		echo '<h1>Hello world! Oh hey '.$name.'!</h1>';
 	});
 
+<<<<<<< Updated upstream
+=======
+	$router->post('/besoins/create', function() use ($app) {
+		$controller = new \app\controllers\BesoinController($app->db(), $app);
+		$controller->create($_POST);
+	});
+
+	$router->get('/besoins/delete', function() use ($app) {
+		$id = $_GET['id'] ?? null;
+		if ($id) {
+			$controller = new \app\controllers\BesoinController($app->db(), $app);
+			$controller->delete($id);
+		} else {
+			header('Location: ' . $app->get('flight.base_url') . 'besoins');
+			exit;
+		}
+	});
+
+	$router->get('/besoins/edit', function() use ($app) {
+		$id = $_GET['id'] ?? null;
+		if ($id) {
+			$controller = new \app\controllers\BesoinController($app->db(), $app);
+			$controller->edit($id);
+		} else {
+			header('Location: ' . $app->get('flight.base_url') . 'besoins');
+			exit;
+		}
+	});
+
+	$router->post('/besoins/update', function() use ($app) {
+		$controller = new \app\controllers\BesoinController($app->db(), $app);
+		$controller->update($_POST);
+	});
+
+	// Villes CRUD
+	$router->get('/villes', function() use ($app) {
+		$controller = new \app\controllers\VilleController($app->db(), $app);
+		$controller->index();
+	});
+
+	$router->post('/villes/create', function() use ($app) {
+		$controller = new \app\controllers\VilleController($app->db(), $app);
+		$controller->create($_POST);
+	});
+
+
+	// === V2 : Achats ===
+	$router->get('/achats', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->index();
+	});
+
+	$router->post('/achats/create', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->create($_POST);
+	});
+
+	// === V2 : Simulation (page Ajax) ===
+	$router->get('/simulation', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->simulation();
+	});
+
+	// Distribution / Reset API
+	$router->post('/api/achats/distribute', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->apiDistribute();
+	});
+
+	$router->post('/api/achats/reset', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->apiReset();
+	});
+
+	// === V2 : Récapitulation (page Ajax) ===
+	$router->get('/recapitulation', function() use ($app) {
+		$controller = new \app\controllers\AchatController($app->db(), $app);
+		$controller->recapitulation();
+	});
+
+	// Configuration applicative (modifier frais de gestion)
+	$router->get('/config', function() use ($app) {
+		$controller = new \app\controllers\ConfigController($app);
+		$controller->index();
+	});
+
+	$router->post('/config/update', function() use ($app) {
+		$controller = new \app\controllers\ConfigController($app);
+		$controller->update($_POST);
+	});
+
+
+>>>>>>> Stashed changes
 	$router->group('/api', function() use ($router) {
 		$router->get('/users', [ ApiExampleController::class, 'getUsers' ]);
 		$router->get('/users/@id:[0-9]', [ ApiExampleController::class, 'getUser' ]);
